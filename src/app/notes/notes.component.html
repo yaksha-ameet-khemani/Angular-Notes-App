@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>    
+    <meta charset="UTF-16"/>
+  </head>
+<body>
+<nav class="navbar navbar-light bg-primary">
+    <div class="container-fluid">
+        <h1 style="color:aliceblue">Notes App Django-Angular</h1>
+        <div class="d-flex">
+            <!-- On button click Bootstrap Modal will be invoked-->
+            <button (click)="clickAddNote()" type="button" class="btn btn-success"   data-bs-toggle="modal" data-bs-target="#exampleModal">Add Note</button>
+          </div>
+    </div>
+</nav>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" class="c1">Notes ID</th>
+            <th scope="col" class="c2">Title</th>
+            <th scope="col" class="c3">Author</th>
+            <th scope="col" class="c4">Description</th>
+            <th scope="col" class="c5">Status</th>
+            <th scope="col" class="c6">Created Date</th>
+            <th scope="col" class="c7">Modified Date</th>
+            <th></th>          
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let note of allNotesData">
+            <td>{{note.id}}</td>
+            <td>{{note.title}}</td>
+            <td>{{note.author}}</td>
+            <td>{{note.description}}</td>
+            <td>{{note.status}}</td>
+            <td>{{note.created_date}}</td>
+            <td>{{note.updated_date}}</td>
+            <td>
+                <button (click)="noteEdit(note)"class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" id="edit">EDIT</button><!--On click calls Boostrap Model-->
+                <button  (click)="deleteNote(note)" class="btn btn-danger mx-3" id="delete">DELETE</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+  <!-- Bootstrap Modal -->  
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" class="text-primary">Notes Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+            <form [formGroup]="formValues" id="formValues" >
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label" class="fw-bold">Title</label>
+                    <input type="text" formControlName="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required />
+                  <span class="error" *ngIf="title && title.invalid && title.touched"> Required </span>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label" class="fw-bold">Author</label>
+                      <input type="text" formControlName="author" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
+                      <span class="error" *ngIf="author&&author.invalid&&author.touched"> Required </span>
+                    </div>
+
+                  <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label" class="fw-bold">Description</label>
+                    <input type="text" formControlName="description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
+                    <span class="error" *ngIf="description&&description.invalid&&description.touched"> Required </span>
+                  </div>
+
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label" class="fw-bold">Status</label>
+                  <input type="email" formControlName="status" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required/>
+                  <span class="error" *ngIf="status&&status.invalid&&status.touched"> Required </span>
+                </div>
+              </form> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" *ngIf="showAdd" (click)="postNoteData()" class="btn btn-primary" id="save" [disabled]="!formValues.valid">Save</button>
+          <button type="button"  *ngIf="showUpdate" (click)="updateNoteData()" class="btn btn-primary" id="update">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
